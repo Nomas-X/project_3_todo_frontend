@@ -5,6 +5,7 @@ const Home = () => {
 	const [last_name, setlast_name] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [isDisabled, setIsDisabled] = useState('');
 	const [isPending, setIsPending] = useState('');
 
 	const panel_mover = useRef(null);
@@ -13,22 +14,37 @@ const Home = () => {
 	const last_name_value = useRef(null);
 	const email_value = useRef(null);
 	const password_value = useRef(null);
+
+	// RegEx
 	const name_pattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{3,15}$/;
 	const password_pattern = /^[A-Za-z\d@$!%*#?&]{8,}$/;
 
 	const validator = (e) => {
-		let result = name_pattern.test(e.target.value);
+		let result = false;
+		let first_name_result = false;
+		let last_name_result = false;
+		let password_result = false;
 
-		if (e.target.name === "first_last_name_signup") {
+		if (e.target.name === "first_name_signup") {
 			result = name_pattern.test(e.target.value);
+			setfirst_name(e.target.value);
+		} else if (e.target.name === "last_name_signup") {
+			result = name_pattern.test(e.target.value);
+			setlast_name(e.target.value);
+		} else if (e.target.name === "email_signup") {
+			result = true;
+			setEmail(e.target.value);
 		} else if (e.target.name === "password_signup") {
 			result = password_pattern.test(e.target.value);
+			setPassword(e.target.value);
 		}
 
 		if (result === false) {
 			e.target.classList.add("unaccepted_pattern");
+			setIsDisabled(true);
 		} else {
 			e.target.classList.remove("unaccepted_pattern");
+			setIsDisabled(false);
 		}
 	};
 
@@ -68,7 +84,6 @@ const Home = () => {
 			body: JSON.stringify(Signin_details)
 		}).then(() => {
 			console.log("User logged in");
-			
 			setIsPending(false);
 		})
 	};
@@ -81,12 +96,12 @@ const Home = () => {
 					<form onSubmit={handleSignup} ref={signup_form}>
 						<h1>Create Account</h1>
 						<span>Do not share this information with anyone!</span>
-						<input type="text" placeholder="First Name" name="first_last_name_signup" onChange={(e) => {setfirst_name(e.target.value)}} ref={first_name_value} value={first_name} required/>
-						<input type="text" placeholder="Last Name" name="first_last_name_signup" onChange={(e) => {setlast_name(e.target.value)}} ref={last_name_value} value={last_name} required/>
-						<input type="email" placeholder="Email" name="email_signup" onChange={(e) => {setEmail(e.target.value);}} ref={email_value} value={email} required/>
-						<input type="password" placeholder="Password" name="password_signup" onChange={(e) => {setPassword(e.target.value)}} ref={password_value} value={password} required/>
-						{!isPending && <button>Sign Up</button>}
-						{isPending && <button disabled>Signing up</button>}
+						<input type="text" placeholder="First Name" name="first_name_signup" onChange={validator} ref={first_name_value} value={first_name} required/>
+						<input type="text" placeholder="Last Name" name="last_name_signup" onChange={validator} ref={last_name_value} value={last_name} required/>
+						<input type="email" placeholder="Email" name="email_signup" onChange={validator} ref={email_value} value={email} required/>
+						<input type="password" placeholder="Password" name="password_signup" onChange={validator} ref={password_value} value={password} required/>
+						{(!isPending && !isDisabled) && <button>Sign Up</button>}
+						{(isPending || isDisabled) && <button disabled>Sign up</button>}
 					</form>
 				</div>
 				<div className="form-container sign-in-container">

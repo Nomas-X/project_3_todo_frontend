@@ -68,6 +68,11 @@ button:focus {
 	outline: none;
 }
 
+button:disabled {
+	border: 1px solid #888;
+	background-color: #888;
+}
+
 button.ghost {
 	background-color: transparent;
 	border-color: #ffffff;
