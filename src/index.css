@@ -24,6 +24,12 @@ h1 {
 	margin: 0;
 }
 
+h1.sign {
+	font-weight: bold;
+	margin: 0;
+	margin-bottom: 5px;
+}
+
 h2 {
 	text-align: center;
 }
@@ -84,7 +90,7 @@ form {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 0 50px;
+	padding: 50px;
 	height: 100%;
 	text-align: center;
 }
@@ -93,7 +99,9 @@ input {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
-	margin: 8px 0;
+	margin: 12px 0;
+	margin-top: 1px;
+	margin-bottom: 1px;
 	width: 100%;
 }
 
@@ -374,4 +382,14 @@ ul li.checked {
 
 .unaccepted_pattern {
 	background-color: #fab8b8;
+}
+
+.formerror {
+	color: red;
+	font-size: 11px;
+	display: inline-block;
+	margin: 3px;
+	padding: 3px;
+	height: 1px;
+	line-height: 0px;
 }

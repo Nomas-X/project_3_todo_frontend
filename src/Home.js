@@ -21,9 +21,6 @@ const Home = () => {
 
 	const validator = (e) => {
 		let result = false;
-		let first_name_result = false;
-		let last_name_result = false;
-		let password_result = false;
 
 		if (e.target.name === "first_name_signup") {
 			result = name_pattern.test(e.target.value);
@@ -94,22 +91,28 @@ const Home = () => {
 			<div className={"container"} id="container" ref={panel_mover}>
 				<div className="form-container sign-up-container">
 					<form onSubmit={handleSignup} ref={signup_form}>
-						<h1>Create Account</h1>
-						<span>Do not share this information with anyone!</span>
+						<h1 className="sign">Create Account</h1>
+						<span>Do not share your information with anyone!</span>
 						<input type="text" placeholder="First Name" name="first_name_signup" onChange={validator} ref={first_name_value} value={first_name} required/>
+						<div className="formerror"></div>
 						<input type="text" placeholder="Last Name" name="last_name_signup" onChange={validator} ref={last_name_value} value={last_name} required/>
+						<div className="formerror"></div>
 						<input type="email" placeholder="Email" name="email_signup" onChange={validator} ref={email_value} value={email} required/>
+						<div className="formerror"></div>
 						<input type="password" placeholder="Password" name="password_signup" onChange={validator} ref={password_value} value={password} required/>
+						<div className="formerror"></div>
 						{(!isPending && !isDisabled) && <button>Sign Up</button>}
 						{(isPending || isDisabled) && <button disabled>Sign up</button>}
 					</form>
 				</div>
 				<div className="form-container sign-in-container">
 					<form onSubmit={handleSignin}>
-						<h1>Sign in</h1>
+						<h1 className="sign">Sign in</h1>
 						<span></span>
 						<input type="email" placeholder="Email" name="email_signin" required/>
+						<div className="formerror"></div>
 						<input type="password" placeholder="Password" name="password_signin" required/>
+						<div className="formerror"></div>
 						<a href="forgotpassword">Forgot your password?</a>
 						{!isPending && <button>Signing</button>}
 						{isPending && <button disabled>Signing in</button>}
