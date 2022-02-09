@@ -1,12 +1,16 @@
 // Buttons are WiP
 import { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
 	const [first_name, setfirst_name] = useState('');
 	const [last_name, setlast_name] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [isDisabled, setIsDisabled] = useState('');
+	const [first_name_error, setfirst_name_error] = useState('');
+	const [last_name_error, setlast_name_error] = useState('');
+	const [email_error, setemail_error] = useState('');
+	const [password_error, setpassword_error] = useState('');
 	const [isPending, setIsPending] = useState('');
 
 	const panel_mover = useRef(null);
@@ -16,8 +20,10 @@ const Home = () => {
 	const email_value = useRef(null);
 	const password_value = useRef(null);
 
+	const history = useHistory();
+
 	// RegEx
-	const name_pattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{3,15}$/;
+	const name_pattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð'-]{3,15}$/;
 	const password_pattern = /^[A-Za-z\d@$!%*#?&]{8,}$/;
 
 	const validator = (e) => {
@@ -35,18 +41,26 @@ const Home = () => {
 		} else if (e.target.name === "password_signup") {
 			result = password_pattern.test(e.target.value);
 			setPassword(e.target.value);
-		}
+		} else if (e.target.name === "email_signin") {
+			result = true;
+			setEmail(e.target.value);
+		} else if (e.target.name === "password_signin") {
+			result = true;
+			setPassword(e.target.value);
+		} 
 
 		if (result === false) {
 			e.target.classList.add("unaccepted_pattern");
-			setIsDisabled(true);
 		} else {
 			e.target.classList.remove("unaccepted_pattern");
-			setIsDisabled(false);
 		}
 	};
 
 	const move_panel = () => {
+		setfirst_name_error("");
+		setlast_name_error("");
+		setemail_error("");
+		setpassword_error("");
 		if (panel_mover.current.className === "container") {
 			panel_mover.current.classList.add("right-panel-active");
 		} else {
@@ -58,6 +72,10 @@ const Home = () => {
 		e.preventDefault();
 		const signup_details = { first_name, last_name, email, password };
 		setIsPending(true);
+		setfirst_name_error("");
+		setlast_name_error("");
+		setemail_error("");
+		setpassword_error("");
 
 		try {
 			const res =  await fetch("http://localhost:9000/signup", {
@@ -67,10 +85,20 @@ const Home = () => {
 				credentials: 'include',
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(signup_details)
-			}).then(() => {
-				console.log("New uesr added");
-				setIsPending(false)
 			})
+			console.log("New uesr added");
+			setIsPending(false);
+			const data = await res.json();
+			console.log(data);
+			if (data.errors) {
+				setfirst_name_error(data.errors.first_name);
+				setlast_name_error(data.errors.last_name);
+				setemail_error(data.errors.email);
+				setpassword_error(data.errors.password);
+			}
+			if (data.user) {
+				//history.push('/dashboard');
+			}
 			
 		} 
 		catch (err) {
@@ -82,6 +110,8 @@ const Home = () => {
 		e.preventDefault();
 		const signin_details = { email, password };
 		setIsPending(true);
+		setemail_error("");
+		setpassword_error("");
 
 		try {
 			const res =  await fetch("http://localhost:9000/signin", {
@@ -91,10 +121,18 @@ const Home = () => {
 				credentials: 'include',
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(signin_details)
-			}).then(() => {
-				console.log("User has signed in");
-				setIsPending(false)
 			})
+			console.log("User has signed in");
+			setIsPending(false)
+			const data = await res.json();
+			console.log(data);
+			if (data.errors) {
+				setemail_error(data.errors.email);
+				setpassword_error(data.errors.password);
+			}
+			if (data.user) {
+				//history.push('/dashboard');
+			}
 			
 		} 
 		catch (err) {
@@ -111,27 +149,27 @@ const Home = () => {
 						<h1 className="sign">Create Account</h1>
 						<span>Do not share your information with anyone!</span>
 						<input type="text" placeholder="First Name" name="first_name_signup" onChange={validator} ref={first_name_value} value={first_name} required/>
-						<div className="formerror"></div>
+						<div className="formerror">{first_name_error}</div>
 						<input type="text" placeholder="Last Name" name="last_name_signup" onChange={validator} ref={last_name_value} value={last_name} required/>
-						<div className="formerror"></div>
+						<div className="formerror">{last_name_error}</div>
 						<input type="email" placeholder="Email" name="email_signup" onChange={validator} ref={email_value} value={email} required/>
-						<div className="formerror"></div>
+						<div className="formerror">{email_error}</div>
 						<input type="password" placeholder="Password" name="password_signup" onChange={validator} ref={password_value} value={password} required/>
-						<div className="formerror"></div>
-						{(!isPending && !isDisabled) && <button>Sign Up</button>}
-						{(isPending || isDisabled) && <button disabled>Sign up</button>}
+						<div className="formerror">{password_error}</div>
+						{!isPending && <button>Sign Up</button>}
+						{isPending && <button disabled>Sign up</button>}
 					</form>
 				</div>
 				<div className="form-container sign-in-container">
 					<form onSubmit={handleSignin}>
 						<h1 className="sign">Sign in</h1>
 						<span></span>
-						<input type="email" placeholder="Email" name="email_signin" required/>
-						<div className="formerror"></div>
-						<input type="password" placeholder="Password" name="password_signin" required/>
-						<div className="formerror"></div>
+						<input type="email" placeholder="Email" name="email_signin" required onChange={validator} value={email}/>
+						<div className="formerror">{email_error}</div>
+						<input type="password" placeholder="Password" name="password_signin" required onChange={validator} value={password}/>
+						<div className="formerror">{password_error}</div>
 						<a href="forgotpassword">Forgot your password?</a>
-						{!isPending && <button>Signing</button>}
+						{!isPending && <button>Sign in</button>}
 						{isPending && <button disabled>Signing in</button>}
 					</form>
 				</div>
