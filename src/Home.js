@@ -61,6 +61,11 @@ const Home = () => {
 		setlast_name_error("");
 		setemail_error("");
 		setpassword_error("");
+		setfirst_name("");
+		setlast_name("");
+		setEmail("");
+		setPassword("");
+
 		if (panel_mover.current.className === "container") {
 			panel_mover.current.classList.add("right-panel-active");
 		} else {
