@@ -54,36 +54,52 @@ const Home = () => {
 		}
 	};
 
-	const handleSignup = (e) => {
+	const handleSignup = async (e) => {
 		e.preventDefault();
 		const signup_details = { first_name, last_name, email, password };
-		
 		setIsPending(true);
-		fetch("http://localhost:9000/signup", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(signup_details)
-		}).then(() => {
-			console.log("New uesr added");
 
-			setIsPending(false);
-		})
+		try {
+			const res =  await fetch("http://localhost:9000/signup", {
+				method: "POST",
+				withCredntials: true,
+				mode:'cors',
+				credentials: 'include',
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(signup_details)
+			}).then(() => {
+				console.log("New uesr added");
+				setIsPending(false)
+			})
+			
+		} 
+		catch (err) {
+			console.log(err);
+		}
 	};
 
-	const handleSignin = (e) => {
+	const handleSignin = async (e) => {
 		e.preventDefault();
-		const Signin_details = { email, password };
-		
+		const signin_details = { email, password };
 		setIsPending(true);
 
-		fetch("http://localhost:9000/authRoutes", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(Signin_details)
-		}).then(() => {
-			console.log("User logged in");
-			setIsPending(false);
-		})
+		try {
+			const res =  await fetch("http://localhost:9000/signin", {
+				method: "POST",
+				withCredntials: true,
+				mode:'cors',
+				credentials: 'include',
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(signin_details)
+			}).then(() => {
+				console.log("User has signed in");
+				setIsPending(false)
+			})
+			
+		} 
+		catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

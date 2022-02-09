@@ -11,12 +11,15 @@ class App extends React.Component {
 	}
 
 	CallAPI(){
-		fetch("http://localhost:9000/testAPI")
+		fetch("http://localhost:9000/testAPI", {
+			withCredntials: true,
+			credentials: 'include'
+		})
 		.then(res => res.text())
 		.then(res => this.setState({ apiResponse: res }));
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		this.CallAPI();
 	}
 
