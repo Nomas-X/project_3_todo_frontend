@@ -1,5 +1,5 @@
 // Buttons are WiP
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
@@ -25,6 +25,28 @@ const Home = () => {
 	// RegEx
 	const name_pattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð'-]{3,15}$/;
 	const password_pattern = /^[A-Za-z\d@$!%*#?&]{8,}$/;
+
+	useEffect( () => {
+		setIsPending(true);
+		async function signcheck() {
+			const res = await fetch("http://localhost:9000/signcheck", {
+				method: "GET",
+				withCredntials: true,
+				mode: 'cors',
+				credentials: 'include'
+			})
+			setIsPending(false);
+			const data = await res.json();
+			console.log(data);
+			if (data === 'Authentication successful') {
+				history.push('/dashboard')
+			} else {
+				console.log('user not logged in');
+			}
+		}
+		signcheck();
+
+	}, []);
 
 	const validator = (e) => {
 		let result = false;
