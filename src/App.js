@@ -3,6 +3,17 @@ import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFound from './NotFound';
 import Dashboard from './Dashboard';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { indigo } from '@mui/material/colors';
+
+const theme = createTheme({
+	palette: {
+	  primary: {
+		main: '#fefefe'
+	  },
+	  secondary: indigo
+	}
+  })
 
 class App extends React.Component {
 	constructor(props){
@@ -25,9 +36,8 @@ class App extends React.Component {
 
 	render(){
 		return (
-			<Router>
-			<div className="App">
-				<div className="content">
+			<ThemeProvider theme={theme}>
+				<Router>
 					<Switch>
 						<Route exact path="/">
 							<Home />
@@ -39,10 +49,9 @@ class App extends React.Component {
 							<NotFound />
 						</Route>
 					</Switch>
-				</div>
-				<p>{this.state.apiResponse}</p>
-			</div>
-		</Router>
+					{/* <p>{this.state.apiResponse}</p> */}
+				</Router>
+			</ThemeProvider>
 		);
 	}
 }

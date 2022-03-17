@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+
 
 * {
 	box-sizing: border-box;
@@ -12,6 +14,8 @@ body {
 	font-family: 'Montserrat', sans-serif;
 	margin: 0px;
 	padding: 0px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .home_page_container {
@@ -25,9 +29,27 @@ body {
 	margin: -80px 0 -6px;
 }
 
-html {
-	background-color: #19437a
+.App {
+	background-color: #19437a;
+	height: 100%;
+	overflow: auto;
+	text-align: center;
 }
+
+.error {
+	display: none;
+}
+.error.active {
+	display: block;
+	color: red;
+}
+  
+.fade-out {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 1s 0.5s, opacity 0.5s;
+}
+  
 
 h1 {
 	font-weight: bold;
@@ -238,21 +260,6 @@ input {
 	transform: translateX(20%);
 }
 
-.social-container {
-	margin: 20px 0;
-}
-
-.social-container a {
-	border: 1px solid #dddddd;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
-}
-
 footer {
 	background-color: #222;
 	color: #fff;
@@ -266,131 +273,12 @@ footer {
 }
 
 footer p {
-	margin: 10px 0;
+	margin: 32.62px 0;
 }
 
 footer a {
 	color: #3c97bf;
 	text-decoration: none;
-}
-
-/* Include the padding and border in an element's total width and height */
-.todo_container {
-	display: flex;
-	flex-direction: column;
-}
-
-.todo_container img {
-	width: 100%;
-}
-/* Remove margins and padding from the list */
-.todo_container ul {
-	margin: 0;
-	padding: 0;
-}
-
-/* Style the list items */
-.todo_container ul li {
-	cursor: pointer;
-	position: relative;
-	padding: 12px 8px 12px 40px;
-	background: #eee;
-	font-size: 18px;
-	transition: 0.2s;
-
-	/* make the list items unselectable */
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-/* Set all odd list items to a different color (zebra-stripes) */
-.todo_container ul li:nth-child(odd) {
-	background: #f9f9f9;
-}
-
-/* Darker background-color on hover */
-.todo_container ul li:hover {
-	background: #ddd;
-}
-
-/* When clicked on, add a background color and strike out text */
-ul li.checked {
-	background: #888;
-	color: #fff;
-	text-decoration: line-through;
-}
-
-/* Add a "checked" mark when clicked on */
-.todo_container ul li.checked::before {
-	content: '';
-	position: absolute;
-	border-color: #fff;
-	border-style: solid;
-	border-width: 0 2px 2px 0;
-	top: 10px;
-	left: 16px;
-	transform: rotate(45deg);
-	height: 15px;
-	width: 7px;
-}
-
-/* Style the close button */
-.todo_container .close {
-	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 12px 16px 12px 16px;
-}
-
-.todo_container .close:hover {
-	background-color: #181455;
-	color: white;
-}
-
-/* Style the header */
-.todo_container .header {
-	background-color: #181455;
-	padding: 30px 40px;
-	color: white;
-	text-align: center;
-}
-
-/* Clear floats after the header */
-.todo_container .header:after {
-	content: '';
-	display: table;
-	clear: both;
-}
-
-/* Style the input */
-.todo_container input {
-	margin: 0;
-	border: none;
-	border-radius: 0;
-	width: 75%;
-	padding: 10px;
-	float: left;
-	font-size: 16px;
-}
-
-/* Style the "Add" button */
-.todo_container .addBtn {
-	padding: 10px;
-	width: 25%;
-	background: #d9d9d9;
-	color: #555;
-	float: left;
-	text-align: center;
-	font-size: 16px;
-	cursor: pointer;
-	transition: 0.3s;
-	border-radius: 0;
-}
-
-.todo_container .addBtn:hover {
-	background-color: #bbb;
 }
 
 .unaccepted_pattern {
@@ -405,4 +293,4 @@ ul li.checked {
 	padding: 3px;
 	height: 1px;
 	line-height: 0px;
-}
+} */
