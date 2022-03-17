@@ -9,6 +9,12 @@ h2 {
 }
 
 body {
+	font-family: 'Montserrat', sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+.home_page_container {
 	background: #19437a;
 	display: flex;
 	justify-content: center;
@@ -16,7 +22,11 @@ body {
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100vh;
-	margin: -20px 0 50px;
+	margin: -80px 0 -6px;
+}
+
+html {
+	background-color: #19437a
 }
 
 h1 {
@@ -266,10 +276,13 @@ footer a {
 
 /* Include the padding and border in an element's total width and height */
 .todo_container {
-	box-sizing: border-box;
-	width: 750px;
+	display: flex;
+	flex-direction: column;
 }
 
+.todo_container img {
+	width: 100%;
+}
 /* Remove margins and padding from the list */
 .todo_container ul {
 	margin: 0;

@@ -168,7 +168,7 @@ const Home = () => {
 	};
 
 	return (
-		<section>
+		<section className="home_page_container">
 			<h2>Welcome to Nomas Todo</h2>
 			<div className={"container"} id="container" ref={panel_mover}>
 				<div className="form-container sign-up-container">
