@@ -1,18 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Paper } from '@mui/material';
+import { Container } from '@mui/material';
 import ItemCard from './Components/ItemCard';
+import Masonry from 'react-masonry-css';
 
 const Dashboard = () => {
-	const [isPending, setIsPending] = useState('');
-	const [pendingItems, setPendingItems] = useState([]);
-	const [completedItems, setCompletedItems] = useState([]);
-	let i = 0;
+	const [Items, setItems] = useState([]);
+	const [isPending, setIsPending] = useState(false);
 
 	const history = useHistory();
 
 	useEffect( () => {
-		setIsPending(true);
 		async function signcheck() {
 			const res = await fetch("http://localhost:9000/signcheck", {
 				method: "GET",
@@ -20,7 +18,6 @@ const Dashboard = () => {
 				mode: 'cors',
 				credentials: 'include'
 			})
-			setIsPending(false);
 			const data = await res.json();
 			console.log(data);
 			if (data === 'Authentication successful') {
@@ -37,12 +34,10 @@ const Dashboard = () => {
 				mode: 'cors',
 				credentials: 'include'
 			})
-			setIsPending(false);
 			const data = await res.json();
 			console.log(data);
 			if (data !== 'Authentication missing' | data !=='Authentication failed') {
-				setPendingItems(data.pending);
-				setCompletedItems(data.completed);
+				setItems(data);
 			} else {
 				console.log('User not logged in');
 				history.push('/');
@@ -53,15 +48,53 @@ const Dashboard = () => {
 
 	}, []);
 
+	const handleDelete = async (id) => {
+		const delete_details = { _id: id }
+
+		setIsPending(true);
+
+		try {
+			const res =  await fetch("http://localhost:9000/dashboard/delete", {
+				method: "DELETE",
+				withCredntials: true,
+				mode:'cors',
+				credentials: 'include',
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(delete_details)
+			})
+			const data = await res.json();
+			console.log(data);
+			if (data) {
+				setItems(data);
+				setIsPending(false)
+			} else {
+				console.log('Item could not be deleted due to a server side issue.');
+			}
+			
+		} 
+		catch (err) {
+			console.log(err);
+		}}
+
+		const breakpoints = {
+			default: 3,
+			1100: 2,
+			700: 1
+		}
+
 	return (
 		<Container>
-			<Grid style={{margin:24}} container spacing={0}>
-				{pendingItems.map(pendingItem => (
-					<Grid key={i++} md={6}>
-						<ItemCard item={pendingItem} />
-					</Grid>
+			<Masonry
+				breakpointCols={breakpoints}
+				className="my-masonry-grid"
+				columnClassName="my-masonry-grid_column "
+			>
+				{Items.map(Item => (
+					<div key={Item._id}>
+						<ItemCard item={Item} handleDelete={handleDelete} setIsPending={setIsPending} isPending={isPending} />
+					</div>
 				))}
-			</Grid>
+			</Masonry>
 		</Container>
 	);
 };

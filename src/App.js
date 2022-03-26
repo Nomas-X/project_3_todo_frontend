@@ -5,6 +5,9 @@ import NotFound from './NotFound';
 import Dashboard from './Dashboard';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
+import Layout from './Components/Layout';
+import Create from './Create';
+import Signout from './Pages/Signout';
 
 const theme = createTheme({
 	palette: {
@@ -43,10 +46,24 @@ class App extends React.Component {
 							<Home />
 						</Route>
 						<Route path="/dashboard">
-							<Dashboard />
+							<Layout>
+								<Dashboard />
+							</Layout>
+						</Route>
+						<Route path="/create">
+							<Layout>
+								<Create />
+							</Layout>
+						</Route>
+						<Route path="/signout">
+							<Layout>
+								<Signout />
+							</Layout>
 						</Route>
 						<Route path="*">
-							<NotFound />
+							<Layout>
+								<NotFound />
+							</Layout>
 						</Route>
 					</Switch>
 					{/* <p>{this.state.apiResponse}</p> */}
