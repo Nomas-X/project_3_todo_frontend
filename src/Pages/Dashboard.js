@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Container } from '@mui/material';
-import ItemCard from './Components/ItemCard';
 import Masonry from 'react-masonry-css';
+import ItemCard from '../Components/ItemCard';
+
 
 const Dashboard = () => {
 	const [Items, setItems] = useState([]);
@@ -19,12 +20,10 @@ const Dashboard = () => {
 				credentials: 'include'
 			})
 			const data = await res.json();
-			console.log(data);
 			if (data === 'Authentication successful') {
 				console.log('User logged in')
 			} else {
 				history.push('/')
-				console.log('User not logged in');
 			}
 		}
 		async function getList() {
@@ -35,11 +34,9 @@ const Dashboard = () => {
 				credentials: 'include'
 			})
 			const data = await res.json();
-			console.log(data);
 			if (data !== 'Authentication missing' | data !=='Authentication failed') {
 				setItems(data);
 			} else {
-				console.log('User not logged in');
 				history.push('/');
 			}
 		}
@@ -63,7 +60,6 @@ const Dashboard = () => {
 				body: JSON.stringify(delete_details)
 			})
 			const data = await res.json();
-			console.log(data);
 			if (data) {
 				setItems(data);
 				setIsPending(false)

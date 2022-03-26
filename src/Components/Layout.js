@@ -1,18 +1,10 @@
-import { makeStyles } from '@mui/styles';
 import React from 'react'
-import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Drawer, Typography, List, ListItem, ListItemIcon, ListItemText, AppBar, Toolbar } from '@mui/material';
 import { AddCircleOutlineOutlined, DashboardRounded } from '@mui/icons-material';
-import { useHistory } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import { format } from 'date-fns';
+import { makeStyles } from '@mui/styles';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { format } from 'date-fns';
 
 const drawerWidth = 240
 

@@ -1,11 +1,7 @@
 import React from 'react'
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import { IconButton, Typography } from '@mui/material';
+import { Card, CardHeader, CardContent, IconButton, Typography, Avatar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { DeleteOutlined } from '@mui/icons-material';
-import Avatar from '@mui/material/Avatar';
 
 const useStyles = makeStyles ({
 	avatar: {

@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Typography, Button, Container, TextField } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { makeStyles } from '@mui/styles';
-import TextField from '@mui/material/TextField';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
 	field: {
@@ -29,6 +26,27 @@ export default function Create() {
 	const [detailsError, setDetailsError] = useState(false);
 	const [category, setCategory] = useState('');
 	const [color, setColor] = useState('#3f51b5');
+
+	useEffect( () => {
+		async function signcheck() {
+			const res = await fetch("http://localhost:9000/signcheck", {
+				method: "GET",
+				withCredntials: true,
+				mode: 'cors',
+				credentials: 'include'
+			})
+			const data = await res.json();
+			console.log(data);
+			if (data === 'Authentication successful') {
+				console.log('User logged in')
+			} else {
+				history.push('/')
+				console.log('User not logged in');
+			}
+		}
+		signcheck();
+
+	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

@@ -1,4 +1,4 @@
-import {useEffect } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const Signout = () => {
@@ -13,12 +13,10 @@ const Signout = () => {
 				credentials: 'include'
 			})
 			const data = await res.json();
-			console.log(data);
 			if (data === 'Signout Successful') {
 				history.push('/');
 			} else {
 				history.push('/dashboard');
-				console.log('Signout Failed');
 			}
 		}
 		signout();

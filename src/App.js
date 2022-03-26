@@ -1,13 +1,14 @@
 import React from 'react';
-import Home from './Home';
+import Home from './Pages/Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import NotFound from './NotFound';
-import Dashboard from './Dashboard';
+import NotFound from './Pages/NotFound';
+import Dashboard from './Pages/Dashboard';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
 import Layout from './Components/Layout';
-import Create from './Create';
+import Create from './Pages/Create';
 import Signout from './Pages/Signout';
+import ForgotPassword from './Pages/Forgotpassword';
 
 const theme = createTheme({
 	palette: {
@@ -58,6 +59,11 @@ class App extends React.Component {
 						<Route path="/signout">
 							<Layout>
 								<Signout />
+							</Layout>
+						</Route>
+						<Route path="/forgotpassword">
+							<Layout>
+								<ForgotPassword />
 							</Layout>
 						</Route>
 						<Route path="*">

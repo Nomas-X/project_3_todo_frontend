@@ -37,11 +37,8 @@ const Home = () => {
 			})
 			setIsPending(false);
 			const data = await res.json();
-			console.log(data);
 			if (data === 'Authentication successful') {
 				history.push('/dashboard')
-			} else {
-				console.log('user not logged in');
 			}
 		}
 		signcheck();
@@ -113,10 +110,8 @@ const Home = () => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(signup_details)
 			})
-			console.log("New uesr added");
 			setIsPending(false);
 			const data = await res.json();
-			console.log(data);
 			if (data.errors) {
 				setfirst_name_error(data.errors.first_name);
 				setlast_name_error(data.errors.last_name);
@@ -124,7 +119,7 @@ const Home = () => {
 				setpassword_error(data.errors.password);
 			}
 			if (data.user) {
-				//history.push('/dashboard');
+				history.push('/dashboard');
 			}
 			
 		} 
@@ -149,16 +144,14 @@ const Home = () => {
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(signin_details)
 			})
-			console.log("User has signed in");
 			setIsPending(false)
 			const data = await res.json();
-			console.log(data);
 			if (data.errors) {
 				setemail_error(data.errors.email);
 				setpassword_error(data.errors.password);
 			}
 			if (data.user) {
-				//history.push('/dashboard');
+				history.push('/dashboard');
 			}
 			
 		} 
